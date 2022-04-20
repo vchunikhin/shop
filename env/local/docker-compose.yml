@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  shop-db:
+    image: postgres
+    container_name: shop-db
+    restart: always
+    environment:
+      POSTGRES_USER: gotest
+      POSTGRES_PASSWORD: gotest
+      POSTGRES_DB: shop
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pg-data-volume:/var/lib/postgresql/data
