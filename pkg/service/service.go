@@ -1,9 +1,12 @@
 package service
 
-import "local/shop/backend/pkg/repository"
+import (
+	shop "local/shop/backend"
+	"local/shop/backend/pkg/repository"
+)
 
 type User interface {
-
+	CreateUser(user shop.User) (string, error)
 }
 
 type Order interface {
@@ -31,5 +34,7 @@ type Service struct {
 }
 
 func NewService(rep *repository.Repository) *Service  {
-	return &Service{}
+	return &Service{
+		User: NewUserService(rep),
+	}
 }

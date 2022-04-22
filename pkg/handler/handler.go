@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"local/shop/backend/pkg/service"
+	"net/http"
 )
 
 type Handler struct {
@@ -52,6 +53,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 }
 
 func (h *Handler) health(c *gin.Context) {
+	c.JSON(http.StatusOK, "OK")
 }
 
 func makeupRoute(group string) string {

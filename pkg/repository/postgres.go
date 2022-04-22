@@ -8,6 +8,13 @@ import (
 
 const (
 	dbDriverKey = "db.driver"
+	dbSchemaKey = "DB_SCHEMA"
+
+	categoriesTable = "categories"
+	itemsTable = "items"
+	ordersTable = "orders"
+	productsTable = "products"
+	usersTable = "users"
 )
 
 type Config struct {

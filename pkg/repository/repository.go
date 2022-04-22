@@ -1,9 +1,12 @@
 package repository
 
-import "github.com/jmoiron/sqlx"
+import (
+	"github.com/jmoiron/sqlx"
+	shop "local/shop/backend"
+)
 
 type User interface {
-
+	CreateUser(user shop.User) (string, error)
 }
 
 type Order interface {
@@ -31,5 +34,7 @@ type Repository struct {
 }
 
 func NewRepository(db *sqlx.DB) *Repository  {
-	return &Repository{}
+	return &Repository{
+		User: NewUserPostgres(db),
+	}
 }

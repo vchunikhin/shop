@@ -7,20 +7,21 @@ import (
 )
 
 type BaseEntity struct {
-	Id      uuid.UUID `json:"id"`
-	Created time.Time `json:"created"`
-	Updated time.Time `json:"updated"`
-	Deleted time.Time `json:"deleted"`
+	Id      uuid.UUID `json:"-"`
+	Created time.Time `json:"-"`
+	Updated time.Time `json:"-"`
+	Deleted time.Time `json:"-"`
 }
 
 type User struct {
-	BaseEntity
-	FullName string `json:"full_name"`
+	//BaseEntity
+	FirstName string `json:"first_name" binding:"required"`
+	LastName string `json:"last_name" binding:"required"`
 }
 
 type Category struct {
 	BaseEntity
-	Name string `json:"name"`
+	Name string `json:"name" binding:"required"`
 }
 
 type Order struct {

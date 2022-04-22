@@ -4,11 +4,11 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"local/shop/backend/pkg/handler"
 	"local/shop/backend/pkg/repository"
 	"local/shop/backend/pkg/service"
-	"log"
 	"os"
 )
 
@@ -23,6 +23,10 @@ const (
 	dbName = "db.name"
 	dbSSLMode = "db.sslmode"
 )
+
+func init() {
+	log.SetFormatter(&log.JSONFormatter{})
+}
 
 func main() {
 	if err := initConfig(); err != nil {
