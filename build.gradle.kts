@@ -1,7 +1,7 @@
 description="The pet project for golang researching"
 
 task("createInitialMigration") {
-    group = "build"
+    group = "migration"
     description = "Create schema folder with initial sql scripts"
     doLast {
         exec {
@@ -12,7 +12,7 @@ task("createInitialMigration") {
 }
 
 task("configureDockerEnvironment") {
-    group = "build"
+    group = "env"
     description = "Configure the docker environment"
     doLast {
         exec {
@@ -23,7 +23,7 @@ task("configureDockerEnvironment") {
 }
 
 task("dropDockerEnvironment") {
-    group = "drop"
+    group = "env"
     description = "Drop the docker environment"
     doLast {
         exec {
@@ -33,8 +33,15 @@ task("dropDockerEnvironment") {
     }
 }
 
-task("downloadDependencies") {
+task("updateDependencies") {
+    group = "go"
     description = "Download all dependencies based on go.mod file"
+    doLast {
+        exec {
+            executable("go")
+            args("mod", "tidy")
+        }
+    }
     doLast {
         exec {
             executable("go")
@@ -43,11 +50,24 @@ task("downloadDependencies") {
     }
 }
 
+task("runMigration") {
+    group = "migration"
+    description = "Run migration"
+    doLast {
+        exec {
+            executable("sh")
+            args("migration/run_migration.sh")
+        }
+    }
+}
 
-task("initBuild") {
-    group = "build"
-    description = "Build all initial files and the environment"
-    dependsOn("createInitialMigration")
-    dependsOn("configureDockerEnvironment")
-    dependsOn("downloadDependencies")
+task("runMigrationToDropTables") {
+    group = "migration"
+    description = "Run migration to drop the schema and tables"
+    doLast {
+        exec {
+            executable("sh")
+            args("migration/run_migration_to_drop_tables.sh")
+        }
+    }
 }
